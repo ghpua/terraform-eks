@@ -1,7 +1,7 @@
 ### Hardcoding a lot of values for now.
 
 resource "aws_autoscaling_group" "eks_workers" {
-  name = "eks-workers"
+  name = "eks-workers-${terraform.workspace}"
 
   launch_configuration = "${aws_launch_configuration.eks_workers.name}"
 
