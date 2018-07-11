@@ -9,5 +9,10 @@ resource "aws_eks_cluster" "cluster" {
       "${var.sg_id_cluster}",
     ]
   }
+  
+  timeouts {
+    create = "30m"
+    delete = "30m"
+  }
 }
 
