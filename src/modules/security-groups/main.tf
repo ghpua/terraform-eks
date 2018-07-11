@@ -1,22 +1,3 @@
-variable "vpc_id" {
-  description = "ID of the VPC to deploy the cluster to."
-  type        = "string"
-}
-
-variable "cidr" {
-  description = "CIDR block for internal security groups."
-}
-
-variable "cluster_name" {
-  description = "Name of the cluster. For tagging."
-  type        = "string"
-}
-
-variable "environment" {
-  description = "Name of the environment, e.g. dev, prod, etc."
-  type        = "string"
-}
-
 resource "aws_security_group" "masters" {
   name        = "${var.cluster_name}-masters"
   description = "Security group for the EKS cluster."
@@ -144,19 +125,3 @@ resource "aws_security_group" "external_ssh" {
     Environment = "${var.environment}"
   }
 }
-
-// External SSH allows ssh connections on port 22 from the world.
-output "external_ssh" {
-  value = "${aws_security_group.external_ssh.id}"
-}
-
-output "sg_id_masters" {
-  description = "ID of the security group for the EKS cluster."
-  value       = "${aws_security_group.masters.id}"
-}
-
-output "sg_id_workers" {
-  description = "ID of the security group for the works ASG."
-  value       = "${aws_security_group.workers.id}"
-}
-
