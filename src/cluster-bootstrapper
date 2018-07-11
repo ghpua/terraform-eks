@@ -17,6 +17,7 @@ deploy_cluster(){
 	#terraform plan
 	terraform apply
 
+	mkdir -p ~/.kube
 	terraform output kubeconfig-aws-1-10 > ~/.kube/eksconfig
 	terraform output role_arn_eks_basic_workers > aws-auth-cm.yaml
 
