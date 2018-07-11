@@ -1,6 +1,4 @@
 region = "us-west-2"
-bastion_instance_type = "t2.micro"
-bastion_volume_size = "20"
 
 availability_zones = [
   "us-west-2a",

@@ -145,43 +145,9 @@ resource "aws_security_group" "external_ssh" {
   }
 }
 
-resource "aws_security_group" "internal_ssh" {
-  name        = "${format("%s-%s-internal-ssh", var.cluster_name, var.environment)}"
-  description = "Allows ssh from bastion"
-  vpc_id      = "${var.vpc_id}"
-
-  ingress {
-    from_port       = 22
-    to_port         = 22
-    protocol        = "tcp"
-    security_groups = ["${aws_security_group.external_ssh.id}"]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "tcp"
-    cidr_blocks = ["${var.cidr}"]
-  }
-
-  lifecycle {
-    create_before_destroy = true
-  }
-
-  tags {
-    Name        = "${format("%s internal ssh", var.cluster_name)}"
-    Environment = "${var.environment}"
-  }
-}
-
 // External SSH allows ssh connections on port 22 from the world.
 output "external_ssh" {
   value = "${aws_security_group.external_ssh.id}"
-}
-
-// Internal SSH allows ssh connections from the external ssh security group.
-output "internal_ssh" {
-  value = "${aws_security_group.internal_ssh.id}"
 }
 
 output "sg_id_masters" {
