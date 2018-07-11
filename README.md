@@ -17,7 +17,7 @@ __NOTE__: deploying an EKS cluster will incur cost for AWS resources.
 
 ## Quickstart
 #### Deploy
-- Checkout this repo
+- git clone <repo-url> this repo
 - `./eks cluster up` # Takes ~15min
 - `kubectl apply -f nginx.yaml` # Deploy an example Nginx pod
 - `export KUBECONFIG=~/.kube/eksconfig`
