@@ -19,6 +19,8 @@ __NOTE__: deploying an EKS cluster will incur cost for AWS resources.
   - On the Review page, note the recommendations and warnings, click Next Step
   - Wait for your Cloud9 environment to be provisioned
 - Once the environment starts, in the terminal proceed with the next steps
+- In the Cloud9 Preferences (cog symbol in top right) preferences --> aws settings --> disable AWS managed temp creds
+- From the terminal window `aws configure` and supply the access key and secret key for your IAM user
 - Move terraform wrapper so it can be invoked from any folder
   `chmod +x ./terraform && sudo mv ./terraform /usr/local/bin`
 - Download Heptio Authenticator
