@@ -1,5 +1,5 @@
 # Terraform EKS Cluster
-PoC for EKS cluster deployment
+See credits for source/base works
 
 __NOTE__: deploying an EKS cluster will incur cost for AWS resources.
 
@@ -30,6 +30,7 @@ __NOTE__: deploying an EKS cluster will incur cost for AWS resources.
 - `terraform destroy` # Takes ~15min
 
 ## Credits
+- [yamaszone](https://github.com/yamaszone/terraform-eks) for PoC EKS solution
 - [Segmentio Stack](https://github.com/segmentio/stack) for VPC related modules
 - [WillJCJ](https://github.com/WillJCJ/eks-terraform-demo) for EKS related modules
 
