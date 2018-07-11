@@ -1,5 +1,5 @@
 *.swp
-
+*.zip
 #  Local .terraform directories
 **/.terraform/*
 
