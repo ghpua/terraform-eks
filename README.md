@@ -19,6 +19,8 @@ __NOTE__: deploying an EKS cluster will incur cost for AWS resources.
   - On the Review page, note the recommendations and warnings, click Next Step
   - Wait for your Cloud9 environment to be provisioned
 - Once the environment starts, in the terminal proceed with the next steps
+- Move terraform wrapper so it can be invoked from any folder
+  `chmod +x ./terraform && sudo mv ./terraform /usr/local/bin`
 - Download Heptio Authenticator
   `curl -o heptio-authenticator-aws https://amazon-eks.s3-us-west-2.amazonaws.com/1.10.3/2018-06-05/bin/linux/amd64/heptio-authenticator-aws` 
 - Install Heptio Authenticator
