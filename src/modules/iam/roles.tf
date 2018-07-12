@@ -2,7 +2,7 @@
 resource "aws_iam_role" "eks_basic_masters" {
   description = "The minimum permissions for a functioning eks cluster."
 
-  name               = "eks-basic-access-masters"
+  name               = "eks-basic-access-masters-${var.environment}"
   assume_role_policy = "${data.aws_iam_policy_document.assume_role_policy_eks.json}"
 }
 
@@ -18,7 +18,7 @@ resource "aws_iam_role_policy_attachment" "eks_masters_service" {
 
 ### Workers
 resource "aws_iam_instance_profile" "eks_basic_workers" {
-  name = "eks-basic-access-workers"
+  name = "eks-basic-access-workers-${var.environment}"
 
   role = "${aws_iam_role.eks_basic_workers.name}"
 }
@@ -26,7 +26,7 @@ resource "aws_iam_instance_profile" "eks_basic_workers" {
 resource "aws_iam_role" "eks_basic_workers" {
   description = "The minimum permissions for functioning worker nodes."
 
-  name               = "eks-basic-access-workers"
+  name               = "eks-basic-access-workers-${var.environment}"
   assume_role_policy = "${data.aws_iam_policy_document.assume_role_policy_ec2.json}"
 }
 
