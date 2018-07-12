@@ -1,5 +1,7 @@
 #!/bin/bash -xe
 
+#https://github.com/awslabs/amazon-eks-ami/blob/19279be9fa95dce0057474609fc28f094fa4cf6d/amazon-eks-nodegroup.yaml
+
 CA_CERTIFICATE_DIRECTORY=/etc/kubernetes/pki
 CA_CERTIFICATE_FILE_PATH=$CA_CERTIFICATE_DIRECTORY/ca.crt
 MODEL_DIRECTORY_PATH=~/.aws/eks
