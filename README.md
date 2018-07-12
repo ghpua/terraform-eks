@@ -33,17 +33,82 @@ __NOTE__: deploying an EKS cluster will incur cost for AWS resources.
 
 ## Quickstart
 #### Deploy
-- git clone <repo-url> this repo
-- `./eks cluster up` # Takes ~15min
-- `kubectl apply -f nginx.yaml` # Deploy an example Nginx pod
-- `export KUBECONFIG=~/.kube/eksconfig`
-- `kubectl get pods` # Check if the Nginx pod is running
-- `kubectl get svc -o wide` # Locate the service URL for Nginx
+- Clone this repo
+
+ `git clone <repo-url>`
+ 
+- List existing terraform workspaces
+
+ `terraform workspace list`
+ 
+- Create a terraform workspace for the environment you wish to create
+
+ `terraform workspace new <environment>`
+ 
+ - Eg
+ 
+ `terraform workspace new development_us-west-2`
+
+ `terraform workspace new production_us-east-1`
+
+- Bring up the environment and put kubectl settings in place. This takes ~15min
+
+ `./eks cluster up`
+
+- Load kubectl configuration into your shell env
+
+ `export KUBECONFIG=~/.kube/eksconfig`
+ 
+- Deploy the json-server pod
+
+ `kubectl apply -f json-server.yaml`
+
+- Check if the Nginx pod is running
+ `kubectl get pods`
+
+- Locate the service URL for json-server
+
+ `kubectl get svc -o wide`
+
+
+
+
 - Copy the Nginx URL from previous step and launch the Nginx welcome page via port 8000
   - URL may look like `http://a2ec4e6b66a2411e883240aa8289a10c-778396272.us-west-2.elb.amazonaws.com:8000/`
-#### Destroy
-- `kubectl delete -f nginx.yaml` # Delete Nginx pod if deployed based on the sample
-- `terraform destroy` # Takes ~15min
+
+
+
+
+- Switch to a pre-existing terraform workspace (for an environment you already created)
+ 
+ `terraform workspace select <environment>`
+
+ `./eks cluster up`
+
+ `export KUBECONFIG=~/.kube/eksconfig`
+
+
+#### Destroy a running cluster
+
+- Ensure we are targetting the intended cluster
+
+ `terraform workspace list`
+
+ `terraform workspace select <environment>`
+
+ `./eks cluster up`
+
+ `export KUBECONFIG=~/.kube/eksconfig`
+
+- Delete all deployed pods, eg json-server
+
+NOTE: (failing to complete this step may orphan resources and block the terraform destroy)
+
+ `kubectl delete -f json-server.yaml` # Delete Nginx pod if deployed based on the sample
+
+- This next step takes ~15min
+
+ `terraform destroy`
 
 ## Credits
 - [yamaszone](https://github.com/yamaszone/terraform-eks) for PoC EKS solution
