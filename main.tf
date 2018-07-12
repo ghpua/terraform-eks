@@ -67,13 +67,14 @@ locals {
   #assumes a workspace name like env_region eg: dev_eu-west-1
   region = "${element(split("_", terraform.workspace), 3)}"
   environment = "${element(split("_", terraform.workspace), 2)}"
-
+  us_east_1b_az = "us-east-1b"
   #work around the issue:
   #because us-east-1a, the targeted availability zone, does not currently have sufficient capacity to support the cluster. Retry and choose from these availability zones: us-east-1b, us-east-1c, us-east-1d status code: 400
   #this will likely need to become a map as more eks regions become available
-  first_az = "${local.region == "us-east-1" ? "${data.aws_availability_zones.available.names[1]}" : "${data.aws_availability_zones.available.names[0]}"}"
-  second_az = "${local.region == "us-east-1" ? "${data.aws_availability_zones.available.names[2]}" : "${data.aws_availability_zones.available.names[1]}"}"
-  third_az = "${local.region == "us-east-1" ? "${data.aws_availability_zones.available.names[3]}" : "${data.aws_availability_zones.available.names[2]}"}"
+  is_us_east_1 = "${local.region == "us-east-1" ? 1 : 0 }"
+  first_az = "${local.is_us_east_1 ? "us-east-1b" : "${data.aws_availability_zones.available.names[0]}"}"
+  second_az = "${local.is_us_east_1 ? "us-east-1c" : "${data.aws_availability_zones.available.names[1]}"}"
+  third_az = "${local.is_us_east_1 ? "us-east-1d" : "${data.aws_availability_zones.available.names[2]}"}"
 
   availability_zones = [
     "${local.first_az}",
