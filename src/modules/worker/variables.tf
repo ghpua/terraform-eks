@@ -1,3 +1,14 @@
+variable "environment" {
+  description = "Cluster environment name"
+  type = "string"
+}
+
+variable "region" {
+  description = "AWS region"
+  type = "string"
+}
+
+
 variable "worker_subnets" {
   description = "Subnets to deploy the workers in to."
   type        = "list"

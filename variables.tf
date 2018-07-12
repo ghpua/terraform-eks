@@ -1,7 +1,3 @@
-variable "region" {
-  description = "AWS region. Default us-west-2"
-}
-
 variable "cidr" {
   description = "VPC CIDR block"
 }

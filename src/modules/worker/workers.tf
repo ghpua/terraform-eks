@@ -1,7 +1,7 @@
 ### Hardcoding a lot of values for now.
 
 resource "aws_autoscaling_group" "eks_workers" {
-  name = "eks-workers-${terraform.workspace}"
+  name = "eks-workers-${var.environment}"
 
   launch_configuration = "${aws_launch_configuration.eks_workers.name}"
 
@@ -47,7 +47,7 @@ data "template_file" "user_data" {
 
   vars {
     # Hardcoded region
-    aws_region   = "us-west-2"
+    aws_region   = "${var.region}"
     cluster_name = "${var.cluster_name}"
 
     # Hardcoded to 17 which is the max for t2.medium

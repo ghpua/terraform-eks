@@ -1,3 +1,8 @@
+variable "environment" {
+  description = "Cluster environment name"
+  type = "string"
+}
+
 variable "policy_arn_eks_cluster" {
   description = "ARN of the default policy: AmazonEKSClusterPolicy."
   type        = "string"

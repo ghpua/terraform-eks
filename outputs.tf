@@ -1,6 +1,6 @@
 // The region in which the infra lives.
 output "region" {
-  value = "${var.region}"
+  value = "${local.region}"
 }
 
 // Comma separated list of internal subnet IDs.
@@ -15,7 +15,7 @@ output "external_subnets" {
 
 // The environment of the stack, e.g "prod".
 output "environment" {
-  value = "${terraform.workspace}"
+  value = "${local.environment}"
 }
 
 // The VPC availability zones.
