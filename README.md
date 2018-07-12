@@ -7,9 +7,9 @@ __NOTE__: deploying an EKS cluster will incur cost for AWS resources.
 - AWS Account where you have Root or IAM user with AdministratorAccess policy or equivalent
 - AWS Cloud9 client
   - Login to the AWS account
-  -- If using the Root account:
-  --- Create an IAM user (Access types: Programmatic & Console access; attach AdministratorAccess policy)
-  --- Log out of the Root account, then back in with the user just created
+    - If using the Root account:
+      - Create an IAM user (Access types: Programmatic & Console access; attach AdministratorAccess policy)
+      - Log out of the Root account, then back in with the user just created
   - Choose Cloud9 from the AWS Console list of services
   - Choose a region geographically close to you that supports Cloud9 (Region selector is top left of Console)
   - Choose to create an environment
@@ -22,14 +22,22 @@ __NOTE__: deploying an EKS cluster will incur cost for AWS resources.
 - In the Cloud9 Preferences (cog symbol in top right) preferences --> aws settings --> disable AWS managed temp creds
 - From the terminal window `aws configure` and supply the access key and secret key for your IAM user
 - Move terraform wrapper so it can be invoked from any folder
+
   `chmod +x ./terraform && sudo mv ./terraform /usr/local/bin`
+  
 - Download Heptio Authenticator
-  `curl -o heptio-authenticator-aws https://amazon-eks.s3-us-west-2.amazonaws.com/1.10.3/2018-06-05/bin/linux/amd64/heptio-authenticator-aws` 
+
+  `curl -o heptio-authenticator-aws https://amazon-eks.s3-us-west-2.amazonaws.com/1.10.3/2018-06-05/bin/linux/amd64/heptio-authenticator-aws`
+
 - Install Heptio Authenticator
+
   `chmod +x heptio-authenticator-aws && sudo mv heptio-authenticator-aws /usr/local/bin/`
+
 - Install kubectl
+
   `curl -o kubectl https://storage.googleapis.com/kubernetes-release/release/v1.10.3/bin/linux/amd64/kubectl`
   `chmod +x kubectl && sudo mv kubectl /usr/local/bin/kubectl`
+
 
 ## Quickstart
 #### Deploy
@@ -108,6 +116,7 @@ __NOTE__: deploying an EKS cluster will incur cost for AWS resources.
 - Taint the necessary resources
 
  `terraform taint -module=worker aws_autoscaling_group.eks_workers`
+ 
  `terraform taint -module=worker aws_launch_configuration.eks_workers`
  
 - Apply changes
@@ -133,7 +142,7 @@ __NOTE__: deploying an EKS cluster will incur cost for AWS resources.
 
 NOTE: (failing to complete this step may orphan resources and block the terraform destroy)
 
- `kubectl delete -f json-server.yaml` # Delete Nginx pod if deployed based on the sample
+ `kubectl delete -f json-server.yaml`
 
 - This next step takes ~15min
 
