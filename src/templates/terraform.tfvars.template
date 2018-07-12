@@ -3,6 +3,7 @@ k8s_instance_type = "t2.micro"
 
 #pods are constrained by instance type:
 #https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html#AvailableIpPerENI
+#https://github.com/awslabs/amazon-eks-ami/blob/master/amazon-eks-nodegroup.yaml
 k8s_max_pods_per_instance = "7"
 
 
