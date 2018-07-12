@@ -8,6 +8,24 @@ variable "k8s_max_pods_per_instance" {
   type = "string"
 }
 
+variable "k8s_asg_default_cooldown" {
+  description = "AWS k8s_asg_default_cooldown"
+  type = "string"
+}
+
+variable "k8s_asg_default_capacity" {
+  description = "AWS k8s_asg_default_capacity"
+  type = "string"
+}
+variable "k8s_asg_max_size" {
+  description = "AWS k8s_asg_max_size"
+  type = "string"
+}
+variable "k8s_asg_min_size" {
+  description = "AWS k8s_asg_min_size"
+  type = "string"
+}
+
 variable "cidr" {
   description = "VPC CIDR block"
 }

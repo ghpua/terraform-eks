@@ -6,6 +6,13 @@ k8s_instance_type = "t2.micro"
 #https://github.com/awslabs/amazon-eks-ami/blob/master/amazon-eks-nodegroup.yaml
 k8s_max_pods_per_instance = "7"
 
+k8s_asg_default_cooldown = "10"
+
+k8s_asg_default_capacity = "1"
+
+k8s_asg_max_size = "2"
+
+k8s_asg_min_size = "1"
 
 # VPC CIDR block
 cidr = "10.30.0.0/16"

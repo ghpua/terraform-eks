@@ -1,15 +1,13 @@
-### Hardcoding a lot of values for now.
-
 resource "aws_autoscaling_group" "eks_workers" {
   name = "eks-workers-${var.environment}"
 
   launch_configuration = "${aws_launch_configuration.eks_workers.name}"
 
-  default_cooldown = 10
+  default_cooldown = "${var.asg_default_cooldown}"
 
-  desired_capacity = 1
-  max_size         = 2
-  min_size         = 1
+  desired_capacity = "${var.asg_default_capacity}"
+  max_size         = "${var.asg_max_size}"
+  min_size         = "${var.asg_min_size}"
 
   vpc_zone_identifier = ["${var.worker_subnets}"]
 

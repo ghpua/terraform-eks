@@ -27,7 +27,7 @@ __NOTE__: deploying an EKS cluster will incur cost for AWS resources.
   `curl -o heptio-authenticator-aws https://amazon-eks.s3-us-west-2.amazonaws.com/1.10.3/2018-06-05/bin/linux/amd64/heptio-authenticator-aws` 
 - Install Heptio Authenticator
   `chmod +x heptio-authenticator-aws && sudo mv heptio-authenticator-aws /usr/local/bin/`
-- Install `kubectl`
+- Install kubectl
   `curl -o kubectl https://storage.googleapis.com/kubernetes-release/release/v1.10.3/bin/linux/amd64/kubectl`
   `chmod +x kubectl && sudo mv kubectl /usr/local/bin/kubectl`
 
@@ -43,7 +43,7 @@ __NOTE__: deploying an EKS cluster will incur cost for AWS resources.
  
 - Create a terraform workspace for the environment you wish to create
 
- `terraform workspace new <environment>`
+ `terraform workspace new <environment>_<aws-region>`
  
  - Eg
  
@@ -77,15 +77,28 @@ __NOTE__: deploying an EKS cluster will incur cost for AWS resources.
   - URL may look like `http://a2ec4e6b66a2411e883240aa8289a10c-778396272.us-west-2.elb.amazonaws.com:8000/`
 
 
-
+#### Switch cluster / terraform workspace
 
 - Switch to a pre-existing terraform workspace (for an environment you already created)
  
- `terraform workspace select <environment>`
+ `terraform workspace select <environment>_<aws-region>`
 
  `./eks cluster up`
 
  `export KUBECONFIG=~/.kube/eksconfig`
+
+
+#### Validate
+
+- Check the cluster is deployed correctly
+
+ `terraform workspace select <environment>_<aws-region>`
+
+ `./eks cluster up`
+
+ `export KUBECONFIG=~/.kube/eksconfig`
+
+ `./eks run tests`
 
 
 #### Destroy a running cluster
@@ -94,7 +107,7 @@ __NOTE__: deploying an EKS cluster will incur cost for AWS resources.
 
  `terraform workspace list`
 
- `terraform workspace select <environment>`
+ `terraform workspace select <environment>_<aws-region>`
 
  `./eks cluster up`
 

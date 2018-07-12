@@ -1,3 +1,23 @@
+variable "asg_max_size" {
+  description = "k8s workers auto scaling group max_size"
+  type = "string"
+}
+
+variable "asg_min_size" {
+  description = "k8s workers auto scaling group min_size"
+  type = "string"
+}
+
+variable "asg_default_cooldown" {
+  description = "k8s workers auto scaling group default cooldown"
+  type = "string"
+}
+
+variable "asg_default_capacity" {
+  description = "k8s workers auto scaling group default capacity"
+  type = "string"
+}
+
 variable "instance_type" {
   description = "AWS instance type"
   type = "string"
