@@ -36,6 +36,7 @@ __NOTE__: deploying an EKS cluster will incur cost for AWS resources.
 - Install kubectl
 
   `curl -o kubectl https://storage.googleapis.com/kubernetes-release/release/v1.10.3/bin/linux/amd64/kubectl`
+  
   `chmod +x kubectl && sudo mv kubectl /usr/local/bin/kubectl`
 
 
