@@ -1,8 +1,10 @@
-availability_zones = [
-  "us-west-2a",
-  "us-west-2b",
-  "us-west-2c",
-]
+#Worker node instance type
+k8s_instance_type = "t2.micro"
+
+#pods are constrained by instance type:
+#https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html#AvailableIpPerENI
+k8s_max_pods_per_instance = "7"
+
 
 # VPC CIDR block
 cidr = "10.30.0.0/16"

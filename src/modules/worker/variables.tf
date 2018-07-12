@@ -1,3 +1,13 @@
+variable "instance_type" {
+  description = "AWS instance type"
+  type = "string"
+}
+
+variable "max_pods" {
+  description = "Maximum number of pods that should be run on an instance"
+  type = "string"
+}
+
 variable "environment" {
   description = "Cluster environment name"
   type = "string"

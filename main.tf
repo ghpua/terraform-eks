@@ -10,7 +10,7 @@ module "vpc" {
   cidr               = "${var.cidr}"
   internal_subnets   = "${var.internal_subnets}"
   external_subnets   = "${var.external_subnets}"
-  availability_zones = "${var.availability_zones}"
+  availability_zones = "${local.availability_zones}"
   environment        = "${local.environment}"
 }
 
@@ -48,6 +48,8 @@ module "worker" {
 
   environment                   = "${local.environment}"
   region                        = "${local.region}"
+  instance_type                 = "${var.k8s_instance_type}"
+  max_pods                      = "${var.k8s_max_pods_per_instance}"
   # Use module output to wait for masters to create.
   cluster_name                  = "${module.eks.cluster_id}"
   instance_profile_name_workers = "${module.iam.instance_profile_name_workers}"
@@ -55,13 +57,20 @@ module "worker" {
   sg_id_workers                 = "${module.security_groups.sg_id_workers}"
 }
 
-### kubecfg
+data "aws_availability_zones" "available" {}
 
 locals {
   #assumes a workspace name like env_region eg: dev_eu-west-1
   region = "${element(split("_", terraform.workspace), 3)}"
   environment = "${element(split("_", terraform.workspace), 2)}"
+  
+  availability_zones = [
+    "${data.aws_availability_zones.available.names[3]}",
+    "${data.aws_availability_zones.available.names[2]}",
+    "${data.aws_availability_zones.available.names[1]}"
+  ]
 
+### kubecfg
   kubeconfig-aws-1-10 = <<KUBECONFIG
 
 apiVersion: v1

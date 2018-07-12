@@ -1,3 +1,13 @@
+variable "k8s_instance_type" {
+  description = "AWS instance type"
+  type = "string"
+}
+
+variable "k8s_max_pods_per_instance" {
+  description = "Maximum number of pods that should be run on an instance"
+  type = "string"
+}
+
 variable "cidr" {
   description = "VPC CIDR block"
 }
@@ -10,11 +20,6 @@ variable "internal_subnets" {
 variable "external_subnets" {
   description = "List of public subnets"
   type        = "list"
-}
-
-variable "availability_zones" {
-  description = "AZ list"
-  type = "list"
 }
 
 variable "policy_arn_eks_cluster" {

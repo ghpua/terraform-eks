@@ -28,9 +28,25 @@ resource "aws_autoscaling_group" "eks_workers" {
   }
 }
 
+data "aws_ami" "k8sworker" {
+    most_recent = true
+
+    filter {
+        name   = "name"
+        values = ["eks-worker-v*"]
+    }
+
+    filter {
+        name   = "virtualization-type"
+        values = ["hvm"]
+    }
+
+    owners = ["602401143452"]
+}
+
 resource "aws_launch_configuration" "eks_workers" {
-  instance_type = "t2.medium"
-  image_id      = "ami-73a6e20b"
+  instance_type = "${var.instance_type}" #"t2.medium"
+  image_id      = "${data.aws_ami.k8sworker.id}" #ami-73a6e20b"
 
   security_groups = ["${var.sg_id_workers}"]
 
@@ -46,11 +62,12 @@ data "template_file" "user_data" {
   template = "${file("${path.module}/user-data.tpl")}"
 
   vars {
-    # Hardcoded region
     aws_region   = "${var.region}"
     cluster_name = "${var.cluster_name}"
 
-    # Hardcoded to 17 which is the max for t2.medium
-    max_pods = 17
+    #This assumes 3 eni's get deployed. Default seems to be 2: Hardcoded to 17 which is the max for t2.medium
+    # https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html#AvailableIpPerENI
+    #kubectl get pods --all-namespaces
+    max_pods = "${var.max_pods}"
   }
 }
