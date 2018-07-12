@@ -23,6 +23,14 @@ SOFTWARE.
 */
 
 
+#https://github.com/hashicorp/terraform/issues/14516
+locals {
+  kubernetes_cluster_tag = "${map(
+    "kubernetes.io/cluster/${var.name}", "shared"
+  )}"
+}
+
+
 # This data source returns the newest Amazon NAT instance AMI
 data "aws_ami" "nat_ami" {
   most_recent = true
@@ -47,10 +55,13 @@ resource "aws_vpc" "main" {
   enable_dns_support   = true
   enable_dns_hostnames = true
 
-  tags {
-    Name        = "${var.name}"
-    Environment = "${var.environment}"
-  }
+  tags = "${merge(
+    local.kubernetes_cluster_tag,
+    map(
+      "Name", "${var.name}",
+      "Environment", "${var.environment}"
+    )
+  )}"
 }
 
 /**
@@ -178,10 +189,13 @@ resource "aws_subnet" "external" {
   count                   = "${length(var.external_subnets)}"
   map_public_ip_on_launch = true
 
-  tags {
-    Name        = "${var.name}-${format("external-%03d", count.index+1)}"
-    Environment = "${var.environment}"
-  }
+  tags = "${merge(
+    local.kubernetes_cluster_tag,
+    map(
+      "Name", "${var.name}-${format("external-%03d", count.index+1)}",
+      "Environment", "${var.environment}"
+    )
+  )}"
 }
 
 /**
