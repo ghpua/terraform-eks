@@ -63,17 +63,14 @@ __NOTE__: deploying an EKS cluster will incur cost for AWS resources.
 
  `kubectl apply -f json-server.yaml`
 
-- Check if the Nginx pod is running
- `kubectl get pods`
+- Check if the json-server pod is running
+ `kubectl get pods --all-namespaces`
 
 - Locate the service URL for json-server
 
  `kubectl get svc -o wide`
 
-
-
-
-- Copy the Nginx URL from previous step and launch the Nginx welcome page via port 8000
+- Copy the json-server EXTERNAL-IP from previous step and launch via port 8000
   - URL may look like `http://a2ec4e6b66a2411e883240aa8289a10c-778396272.us-west-2.elb.amazonaws.com:8000/`
 
 
@@ -98,10 +95,29 @@ __NOTE__: deploying an EKS cluster will incur cost for AWS resources.
 
  `export KUBECONFIG=~/.kube/eksconfig`
 
- `./eks run tests`
+ `./eks run health`
+
+#### Change worker node settings on an existing cluster, eg instance size
+
+- Ensure we are targetting the intended cluster
+
+ `terraform workspace list`
+
+ `terraform workspace select <environment>_<aws-region>`
+ 
+- Taint the necessary resources
+
+ `terraform taint -module=worker aws_autoscaling_group.eks_workers`
+ `terraform taint -module=worker aws_launch_configuration.eks_workers`
+ 
+- Apply changes
+
+ `./eks cluster up`
+
+ `export KUBECONFIG=~/.kube/eksconfig`
 
 
-#### Destroy a running cluster
+#### Destroy an existing cluster
 
 - Ensure we are targetting the intended cluster
 
@@ -128,3 +144,5 @@ NOTE: (failing to complete this step may orphan resources and block the terrafor
 - [Segmentio Stack](https://github.com/segmentio/stack) for VPC related modules
 - [WillJCJ](https://github.com/WillJCJ/eks-terraform-demo) for EKS related modules
 
+
+"expose k8s asg settings at top level vars; modify az selection;"
